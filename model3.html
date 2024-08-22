@@ -30,7 +30,7 @@
 		
 	   <container>
           <div>
-            Logged in as anish.somani@tiktok.com
+            Logged in as ANISH@example.com
           </div>
        </container>
 
@@ -212,6 +212,15 @@
         		if (retVal == true) { 
         		// BEGIN - PLACE YOUR FUNCTIONS IN THIS SECTION 
 
+                // BEGIN DO NOT EDIT SECTION 
+        		   completePayment();
+        		} else {	
+        		   alert("Payment step cancelled!");
+                   return false;    
+        		}
+        		// END DO NOT EDIT SECTION 
+
+
         		  ttq.identify({
         			// ADVANCED MATCHING PARAMETERS
         			phone_number: "+15551234567" // User's phone number 
@@ -266,14 +275,6 @@
         		  // END HINT - MULTIPLE ITEMS 
 
         		// END - PLACE YOUR FUNCTIONS IN THIS SECTION 
-
-                // BEGIN DO NOT EDIT SECTION 
-        		   completePayment();
-        		} else {	
-        		   alert("Payment step cancelled!");
-                   return false;    
-        		}
-        		// END DO NOT EDIT SECTION 
         	}
 
         	// HINT: This is the dedicated function for Complete Payment
