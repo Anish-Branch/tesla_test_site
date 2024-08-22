@@ -85,6 +85,12 @@
 
         <!-- BEGIN TIKTOK PIXEL EVENT FUNCTIONS SCRIPT SECTION -->
         <script>
+        	// Flags to track which products have been added to the cart
+            var product1Added = false;
+            var product2Added = false;
+            var product3Added = false;
+
+
         	// BEGIN DO NOT EDIT SECTION 
         	completeRegistration();
         	// END DO NOT EDIT SECTION 
@@ -111,12 +117,15 @@
 	        	// BEGIN - PLACE YOUR FUNCTIONS IN THIS SECTION 
 
 	        		ttq.identify({
-	        			// ADVANCED MATCHING PARAMETERS 
-	        		})		
+	        			// ADVANCED MATCHING PARAMETERS
+	        			phone_number: "+15551234567" // User's phone number 
+	        		});		
 
-	        		ttq.track("",{
+	        		ttq.track('CompleteRegistration',{
 	        			// EVENT PARAMETERS 
-	        		}) 
+	        			    email: "email@example.com", // Include the user's email
+    						phone_number: "+15551234567" // User's phone number
+	        		}); 
 	        		
         	    //END - PLACE YOUR FUNCTIONS IN THIS SECTION 
         	}		
@@ -140,11 +149,17 @@
 
         		ttq.identify({
         			/* ADVANCED MATCHING PARAMETERS */
-        		})		
+        			phone_number: "+15551234567" // User's phone number
+        		});		
 
-        		ttq.track("",{
+        		ttq.track('ViewContent',{
         			/* EVENT PARAMETERS */
-        		}) 
+        			content_name: title,
+        			content_id: productId,
+        			content_type: 'product',
+        			value: price,
+        			currency: 'USD'
+        		}); 
 
         		// END - PLACE YOUR FUNCTIONS IN THIS SECTION 
         	}
@@ -160,10 +175,13 @@
         		// BEGIN DO NOT EDIT SECTION 
         		if (title == "Product 1") {
         			document.getElementById("add-to-cart-button-1").disabled = 'true';
+        			product1Added = true;
         		} else if (title == "Product 2") {
         			document.getElementById("add-to-cart-button-2").disabled = 'true';
+        			product2Added = true;
         		} else if (title == "Product 3") {
         			document.getElementById("add-to-cart-button-3").disabled = 'true';
+        			product3Added = true;
         		}
         		document.getElementById("cart-items").stepUp();
         		// END DO NOT EDIT SECTION 
@@ -172,11 +190,18 @@
 
         		ttq.identify({
         			// ADVANCED MATCHING PARAMETERS
-        		})		
+        			phone_number: "+15551234567" // User's phone number
+        		});		
 
-        		ttq.track("",{
-        			// EVENT PARAMETERS 
-        		}) 
+        		ttq.track('AddToCart',{
+        			// EVENT PARAMETERS
+        			content_name: title,            // Name of the product
+        			content_id: productId,          // Product ID
+        			content_type: 'product',        // Type of content (usually 'product')
+        			value: price,                   // Price of the product
+        			currency: 'USD',                // Currency code
+        			quantity: 1 
+        		}); 
 
         		// END - PLACE YOUR FUNCTIONS IN THIS SECTION    		
         	}
@@ -188,13 +213,56 @@
         		// BEGIN - PLACE YOUR FUNCTIONS IN THIS SECTION 
 
         		  ttq.identify({
-        			// ADVANCED MATCHING PARAMETERS 
-        		  })	
+        			// ADVANCED MATCHING PARAMETERS
+        			phone_number: "+15551234567" // User's phone number 
+        		  });	
+
+        		   // Build the contents array based on which products were added
+                    var contents = [];
+                    var totalValue = 0;
+
+                                        if (product1Added) {
+                        contents.push({
+                            content_name: 'Product 1',
+                            content_id: '5678AB',
+                            content_type: 'product',
+                            value: 29.99,
+                            currency: 'USD',
+                            quantity: 1
+                        });
+                        totalValue += 29.99;
+                    }
+
+                    if (product2Added) {
+                        contents.push({
+                            content_name: 'Product 2',
+                            content_id: '6521FJ',
+                            content_type: 'product',
+                            value: 49.99,
+                            currency: 'USD',
+                            quantity: 1
+                        });
+                        totalValue += 49.99;
+                    }
+
+                    if (product3Added) {
+                        contents.push({
+                            content_name: 'Product 3',
+                            content_id: '4098MD',
+                            content_type: 'product',
+                            value: 199.99,
+                            currency: 'USD',
+                            quantity: 1
+                        });
+                        totalValue += 199.99;
+                    }
 
                   // BEGIN HINT - MULTIPLE ITEMS 
-        		  ttq.track('', {contents: [
-
-        		  ]})
+                    ttq.track('InitiateCheckout', {
+                        contents: contents,
+                        value: totalValue,
+                        currency: 'USD'
+                    });
         		  // END HINT - MULTIPLE ITEMS 
 
         		// END - PLACE YOUR FUNCTIONS IN THIS SECTION 
@@ -212,13 +280,56 @@
         	function completePayment() {
         		// BEGIN - PLACE YOUR FUNCTIONS IN THIS SECTION 
         		  ttq.identify({
-        			// ADVANCED MATCHING PARAMETERS 
-        		  })	
+        			// ADVANCED MATCHING PARAMETERS
+        			phone_number: "+15551234567" // User's phone number
+        		  });
+
+        		  var contents = [];
+                var totalValue = 0;
+
+                if (product1Added) {
+                    contents.push({
+                        content_name: 'Product 1',
+                        content_id: '5678AB',
+                        content_type: 'product',
+                        value: 29.99,
+                        currency: 'USD',
+                        quantity: 1
+                    });
+                    totalValue += 29.99;
+                }
+
+                if (product2Added) {
+                    contents.push({
+                        content_name: 'Product 2',
+                        content_id: '6521FJ',
+                        content_type: 'product',
+                        value: 49.99,
+                        currency: 'USD',
+                        quantity: 1
+                    });
+                    totalValue += 49.99;
+                }
+
+                if (product3Added) {
+                    contents.push({
+                        content_name: 'Product 3',
+                        content_id: '4098MD',
+                        content_type: 'product',
+                        value: 199.99,
+                        currency: 'USD',
+                        quantity: 1
+                    });
+                    totalValue += 199.99;
+                }	
 
                   // BEGIN HINT - MULTIPLE ITEMS 
-        		  ttq.track('', {contents: [
+        		  ttq.track('CompletePayment', {
+                    contents: contents,
+                    value: totalValue,
+                    currency: 'USD'
+                });
 
-        		  ]})
         		  // END HINT - MULTIPLE ITEMS 
 
         		// END - PLACE YOUR FUNCTIONS IN THIS SECTION 	
